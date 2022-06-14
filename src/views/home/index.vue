@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
-const router = useRouter()
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+
 </script>
 
 <template>
-    <div>首页</div>
-    <button @click="() => router.push({name:'mine', query: {a : 1}})">跳转到个人中心</button>
-    <div class="text">hhhhhhhhhhhhhhhhhhhhhhhhhhhh</div>
+    {{ t('message.home') }}
+
 </template>
 
 <style lang="scss">

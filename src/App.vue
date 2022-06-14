@@ -1,13 +1,22 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { getCurrentInstance, h } from 'vue'
+import { getCurrentInstance, h, ref } from 'vue'
 import { fetchRoomList } from '@/api/index'
+import zh from 'element-plus/lib/locale/lang/zh-cn'
+import en from 'element-plus/lib/locale/lang/en'
+import { useI18n } from 'vue-i18n'
 
 fetchRoomList()
 
 const router = useRouter();
-
-const {proxy} : any = getCurrentInstance()
+const { proxy } : any = getCurrentInstance()
+// 国际化功能部分
+const lang = ref(null)
+const { locale } = useI18n()
+const changeLanguage = (language) => {
+  lang.value = language
+  locale.value = language.name
+}
 
 proxy.$message({
   message: h('p', null, [
@@ -18,10 +27,19 @@ proxy.$message({
 </script>
 
 <template>
-  <button @click="() => router.push({path:'/home'})">首页</button>
-  <button @click="() => router.push({path:'/mine'})">个人中心</button>
-  <el-button type="primary">Primary</el-button>
-  <router-view></router-view>
+  <!-- 控制全局element-plus语言的组件 -->
+  <el-config-provider :locale="lang">
+
+    <button @click="() => router.push({path:'/home'})">首页</button>
+    <button @click="() => router.push({path:'/mine'})">个人中心</button>
+
+    <button @click="changeLanguage(zh)">切换为中文</button>
+    <button @click="changeLanguage(en)">切换为英文</button>
+
+
+    <el-button type="primary">Primary</el-button>
+    <router-view></router-view>
+  </el-config-provider>
 
 </template>
 
