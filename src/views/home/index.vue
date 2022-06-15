@@ -1,42 +1,22 @@
 <script setup lang="ts">
-import IndexDB from '@/utils/indexedDB.ts'
 import { useI18n } from 'vue-i18n'
+import { fetchElephant, fetchRoomList } from '@/api/index'
+
 const { t } = useI18n()
 
-const indexDB = new IndexDB('aribnb')
-indexDB.openStore('elephant', 'id', ['nose', 'ear'])
-
-// 增加数据
-function addDB(storeName:string) {
-    indexDB.updateItem(storeName, {
-        nose: '55m',
-        ear: 'small'
-    })
+// 真实接口
+function getRoomList() {
+    const result = fetchRoomList()
+    console.log('roomList', result)
 }
 
-// 修改数据
-function updateDB(storeName:string) {
-    indexDB.updateItem(storeName, {
-        id: 1,
-        nose: '55m',
-        ear: 'small'
-    })
+// mock 接口
+function getElephant() {
+    const result = fetchElephant()
+    console.log('elephant', result)
 }
-
-// 删除数据
-function deleteDB(storeName:string, key: number | string) {
-    indexDB.deletItem(storeName, key)
-}
-
-// 查询所有数据
-function getDBAllData(storeName:string) {
-    indexDB.getList(storeName)
-}
-
-// 查询单条数据
-function getSingleData(storeName:string, key:number|string) {
-    indexDB.getItem(storeName, key)
-}
+getRoomList()
+getElephant()
 
 </script>
 
