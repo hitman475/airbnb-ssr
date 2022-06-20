@@ -27,9 +27,6 @@ getElephant()
     <el-button @click="deleteDB('elephant', 2)">删除</el-button>
     <el-button @click="getDBAllData('elephant')">查所有</el-button>
     <el-button @click="getSingleData('elephant', 1)">查</el-button>
-
-
-
 </template>
 
 <style lang="scss">
