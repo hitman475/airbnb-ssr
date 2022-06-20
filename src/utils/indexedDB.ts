@@ -10,7 +10,7 @@ export default class DB {
 
     // 打开数据库
     public openStore(storeName:string, keyPath:string, index?:Array<string>) {
-        const request = window.indexedDB.open(this.dbName, 1)
+        const request = window.indexedDB.open(this.dbName, 2)
         return new Promise((resolve) => {
             request.onsuccess = (event) => {
                 this.db = event.target.result
