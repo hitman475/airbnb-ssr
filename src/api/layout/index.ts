@@ -12,16 +12,13 @@ export interface IResultOr { // 定义interface规范返回结果的类型
 
 const storeName = Object.keys(airbnb.languageObjectStore)[0]
 
-
 // mock接口 保存当前语言包
 export async function saveLanguageApi(lang: any) {
-
     // 使用Eloading组件模拟加载特效
     const loading = ElLoading.service({
         lock: true,
         background: 'rgba(0, 0, 0, 0.7)',
     })
-      
 
     // 先检查 id=1 的用户是否在数据库中
     const resultOr : IResultOr = await airbnb.airbnbDB.getItem(storeName, 1).then(res=> {
@@ -32,15 +29,15 @@ export async function saveLanguageApi(lang: any) {
             result: res || null
         }
     })
-    // 如果数据在，则更新，如果不在则插入
-    const { success } =  resultOr;
+    // 如果数据在，则更新，如果不在则入
+    const { success } = resultOr
     let obj = {}
     if (success) {
         // 数据存在，直接更新
         obj = {name: lang, id: 1}
-    }else {
+    } else {
         // 数据不存在，选择插入
-        obj = {name:lang}
+        obj = { name: lang }
     }
 
     const result : IResultOr = await airbnb.airbnbDB.updateItem(storeName, obj).then(res => {
@@ -50,8 +47,7 @@ export async function saveLanguageApi(lang: any) {
             result: null,
             success: true
         }
-    }) 
-
+    })
 
     //  定时关闭
     setTimeout(() => {
@@ -66,7 +62,7 @@ export async function fetchLanguageApi() {
     // 使用Eloading组件模拟加载特效
     const loading = ElLoading.service({
         lock: true,
-        background: 'rgba(0, 0, 0, 0.7)',
+        background: 'rgba(0, 0, 0, 0.7)'
     })
 
     const result : IResultOr = await airbnb.airbnbDB.getItem(storeName, 1).then(res => {

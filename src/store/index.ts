@@ -1,12 +1,25 @@
 
-import { createStore } from "vuex";
-import { saveLanguageApi } from "@/api/layout/index"
+import { createStore, Store, useStore as baseUseStore } from 'vuex'
+import { saveLanguageApi } from '@/api/layout/index'
+import { InjectionKey } from 'vue'
 
+export interface AllStateTypes {
+    locale: string,
+    userStatus: number
+}
 
-const store = createStore({
+// 定义 injection key
+export const key: InjectionKey<Store<AllStateTypes>> = Symbol('storeKey')
+
+// 重新封装以下 useStore方法，这样就不用每次都在使用 useStore的时候传入key了
+export function useStore() {
+    return baseUseStore(key)
+}
+
+export const store = createStore<AllStateTypes>({
     state: {
         locale: 'zh', // 语言包
-        userStatus: 0,  // 用户登录态
+        userStatus: 0 // 用户登录态
     },
     mutations: {
         setLanguage(state, lang) {
@@ -17,19 +30,16 @@ const store = createStore({
         }
     },
     actions: {
-        changeLanguage({commit}, lang) {
+        changeLanguage({ commit }, lang) {
             saveLanguageApi(lang).then(res => {
                 const { success } = res
                 if (success) {
-                    
                     commit('setLanguage', lang.name)
                 }
            })
         },
-        changeUserStatus({commit}, status) {
+        changeUserStatus({ commit }, status) {
             commit('setUserStatus', status)
         }
     }
 })
-
-export default store

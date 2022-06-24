@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { ref, defineEmits, getCurrentInstance, computed  } from 'vue'
+import { ref, defineEmits, getCurrentInstance, computed } from 'vue'
 import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 import en from 'element-plus/lib/locale/lang/en'
-import {saveLanguageApi, fetchLanguageApi} from "@/api/layout/index"
+import { fetchLanguageApi } from '@/api/layout/index'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { userLogoutApi } from '@/api/login/index'
 import { IResultOr } from '@/api/interface'
-import { useStore } from 'vuex'
+import { useStore } from '@/store/index'
 
 
 const router = useRouter()
@@ -38,7 +38,7 @@ const handleSelect = function(e : any) {
         store.dispatch('changeLanguage', en)
         locale.value = en.name
     } else if (e === 'login') {
-        router.push({name:'login'})
+        router.push({ name: 'login' })
     } else if (e === 'logout') {
         userLogout()
     }
@@ -52,10 +52,11 @@ const emit = defineEmits<{
 function getLanguage() {
   fetchLanguageApi().then(res => {
     const { success, result } = res
-    const { name } = result || {}
+    let { name } = result || {}
+    name = name.name
     if (success) {
       if (name === 'zh') {
-         emit('changeLang', zhCn);
+         emit('changeLang', zhCn)
       } else if (name === 'en') {
          emit('changeLang', en)
       }
@@ -67,7 +68,7 @@ function getLanguage() {
 // 延迟获取一下，防止IndexDB 找不到 transcation
 setTimeout(() => {
     getLanguage()
-},200)
+}, 200)
 
 // 用户登出接口
 async function userLogout() {

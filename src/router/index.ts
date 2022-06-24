@@ -1,40 +1,45 @@
 
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, createMemoryHistory } from "vue-router";
 import Home from '@/views/home/index.vue'
 import Mine from '@/views/mine/index.vue'
 import Login from '@/views/login/index.vue'
 
 const routes = [
     {
-        path:'/home',
+        path: '/home',
         name: 'home',
-        component:Home,
+        component: Home,
         meta: {
             title: '',
         }
     },
     {
-        path:'/mine',
+        path: '/mine',
         name: 'mine',
-        component:Mine,
+        component: Mine,
         meta: {
             title: '',
         }
     },
     {
-        path:'/login',
+        path: '/login',
         name: 'login',
-        component:Login,
+        component: Login,
         meta: {
             title: '',
         }
     }
 ]
 
-
+// const router = createRouter({
+//     history: import.meta.env.SSR ? createMemoryHistory() : createWebHistory(),
+//     routes,
+// })
 const router = createRouter({
-    history:createWebHistory(),     // 这个参数相当于vue2中的 是否有hash值，也就是选择路由模式
+    // 服务端渲染使用 createMemoryHistory
+    // 客户端渲染使用 createWebHistory
+    history: import.meta.env.SSR ? createMemoryHistory() : createWebHistory(), // 这个参数相当于vue2中的 是否有hash值，也就是选择路由模式
     routes
 })
 
-export default router;
+export default router

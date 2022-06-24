@@ -26,7 +26,7 @@ function submitForm() {
 
 // 判断登录还是注册
 function handClick(e:any) {
-    const {label, name} = e.props
+    const { name } = e.props
     loginText.value = t(`login.${name}Btn`)
 }
 </script>
