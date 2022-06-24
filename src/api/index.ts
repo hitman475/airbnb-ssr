@@ -13,14 +13,14 @@ export function fetchRoomList() {
 }
 
 // mock接口
-export async function fetchElephant() {
-    await indexDB.openStore('elephant', 'id', ['nose', 'ear'])
-    const result = indexDB.getList('elephant').then((res:any) => {
-        return {
-            code: '000000',
-            message: '操作成功',
-            result: res
-        }
-    })
-    return result
-}
+// export async function fetchElephant() {
+//     await indexDB.openStore('elephant', 'id', ['nose', 'ear'])
+//     const result = indexDB.getList('elephant').then((res:any) => {
+//         return {
+//             code: '000000',
+//             message: '操作成功',
+//             result: res
+//         }
+//     })
+//     return result
+// }

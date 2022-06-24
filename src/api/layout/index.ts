@@ -1,5 +1,7 @@
 import DB from '@/utils/indexedDB'
 import { ElLoading } from 'element-plus'
+import airbnb from '@/db/index'
+
 
 export interface IResultOr { // 定义interface规范返回结果的类型
     code: string,
@@ -8,7 +10,8 @@ export interface IResultOr { // 定义interface规范返回结果的类型
     result: any
   }
 
-const airbnbDB = new DB('aribnb');
+const storeName = Object.keys(airbnb.languageObjectStore)[0]
+
 
 // mock接口 保存当前语言包
 export async function saveLanguageApi(lang: any) {
@@ -20,10 +23,8 @@ export async function saveLanguageApi(lang: any) {
     })
       
 
-    // 打开数据库
-    await airbnbDB.openStore('language', 'id', ['name'])
     // 先检查 id=1 的用户是否在数据库中
-    const resultOr : IResultOr = await airbnbDB.getItem('language', 1).then(res=> {
+    const resultOr : IResultOr = await airbnb.airbnbDB.getItem(storeName, 1).then(res=> {
         return {
             code : '000000',
             success: true,
@@ -42,7 +43,7 @@ export async function saveLanguageApi(lang: any) {
         obj = {name:lang}
     }
 
-    const result : IResultOr = await airbnbDB.updateItem('language', obj).then(res => {
+    const result : IResultOr = await airbnb.airbnbDB.updateItem(storeName, obj).then(res => {
         return {
             code: '000000',
             message: '操作成功',
@@ -52,7 +53,7 @@ export async function saveLanguageApi(lang: any) {
     }) 
 
 
-     // 定时关闭
+    //  定时关闭
     setTimeout(() => {
         loading.close()
       }, 200)
@@ -68,18 +69,14 @@ export async function fetchLanguageApi() {
         background: 'rgba(0, 0, 0, 0.7)',
     })
 
-    // 打开仓库
-    await airbnbDB.openStore('language', 'id', ['name'])
-    const result : IResultOr = await airbnbDB.getItem('language', 1).then(res => {
+    const result : IResultOr = await airbnb.airbnbDB.getItem(storeName, 1).then(res => {
         return {
             code: '000000',
-            message: '操作系统',
+            message: '操作成功',
             success: true,
             result: res || null
         }
     })
-
-
      // 定时关闭
      setTimeout(() => {
         loading.close()

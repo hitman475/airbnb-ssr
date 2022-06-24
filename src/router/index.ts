@@ -2,21 +2,29 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from '@/views/home/index.vue'
 import Mine from '@/views/mine/index.vue'
-
+import Login from '@/views/login/index.vue'
 
 const routes = [
     {
         path:'/home',
-        component:Home,
         name: 'home',
+        component:Home,
         meta: {
             title: '',
         }
     },
     {
         path:'/mine',
-        component:Mine,
         name: 'mine',
+        component:Mine,
+        meta: {
+            title: '',
+        }
+    },
+    {
+        path:'/login',
+        name: 'login',
+        component:Login,
         meta: {
             title: '',
         }

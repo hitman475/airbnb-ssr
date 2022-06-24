@@ -1,32 +1,21 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
-import { fetchElephant, fetchRoomList } from '@/api/index'
+import { useStore } from 'vuex'
+import { computed, ref } from 'vue'
 
-const { t } = useI18n()
+const store = useStore()
 
-// // 真实接口
-// function getRoomList() {
-//     const result = fetchRoomList()
-//     console.log('roomList', result)
-// }
+function testVuex() {
+    store.dispatch('changeCount', 10)
+}
 
-// // mock 接口
-// function getElephant() {
-//     const result = fetchElephant()
-//     console.log('elephant', result)
-// }
-// getRoomList()
-// getElephant()
-
+const val = computed(() => store.state.count) 
+console.log('#########',store.state.count)
 </script>
 
 <template>
-    {{ t('message.home') }}
-    <el-button @click="addDB('elephant')">增</el-button>
-    <el-button @click="updateDB('elephant')">改</el-button>
-    <el-button @click="deleteDB('elephant', 2)">删除</el-button>
-    <el-button @click="getDBAllData('elephant')">查所有</el-button>
-    <el-button @click="getSingleData('elephant', 1)">查</el-button>
+
+    <h1>{{val}}</h1>
+    <button @click="testVuex">测试vuex</button>
 </template>
 
 <style lang="scss">
