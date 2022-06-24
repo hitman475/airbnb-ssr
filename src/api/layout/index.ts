@@ -58,25 +58,41 @@ export async function saveLanguageApi(lang: any) {
 }
 
 // mock接口， 获取语言包
-export async function fetchLanguageApi() {
-    // 使用Eloading组件模拟加载特效
-    const loading = ElLoading.service({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.7)'
-    })
+// export async function fetchLanguageApi() {
+//     // 使用Eloading组件模拟加载特效
+//     const loading = ElLoading.service({
+//         lock: true,
+//         background: 'rgba(0, 0, 0, 0.7)'
+//     })
 
-    const result : IResultOr = await airbnb.airbnbDB.getItem(storeName, 1).then(res => {
-        return {
-            code: '000000',
-            message: '操作成功',
-            success: true,
-            result: res || null
-        }
+//     const result : IResultOr = await airbnb.airbnbDB.getItem(storeName, 1).then(res => {
+//         return {
+//             code: '000000',
+//             message: '操作成功',
+//             success: true,
+//             result: res || null
+//         }
+//     })
+//      // 定时关闭
+//      setTimeout(() => {
+//         loading.close()
+//       }, 200)
+
+//     return result
+// }
+
+// Mock接口：获取当前语言包
+export async function fetchLanguageApi() {
+    const loading = ElLoading.service({
+      lock: true,
+      background: 'rgba(0, 0, 0, 0.1)'
     })
-     // 定时关闭
-     setTimeout(() => {
+    const result: IResultOr = await airbnb.airbnbDB.getItem(storeName, 1).then(res => {
+      setTimeout(() => {
         loading.close()
       }, 200)
-
+      return { code: '000000', message: '操作成功', result: res || null, success: true }
+    })
     return result
-}
+  }
+  

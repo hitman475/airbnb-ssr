@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineEmits, getCurrentInstance, computed } from 'vue'
+import { ref, defineEmits, getCurrentInstance, computed, onMounted } from 'vue'
 import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 import en from 'element-plus/lib/locale/lang/en'
 import { fetchLanguageApi } from '@/api/layout/index'
@@ -66,9 +66,13 @@ function getLanguage() {
 }
 
 // 延迟获取一下，防止IndexDB 找不到 transcation
-setTimeout(() => {
-    getLanguage()
-}, 200)
+// setTimeout(() => {
+//     getLanguage()
+// }, 200)
+
+onMounted(() => {
+     getLanguage()
+})
 
 // 用户登出接口
 async function userLogout() {
